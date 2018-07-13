@@ -54,6 +54,13 @@ GridLayout {
             y: parent.height/2
         }
 
+        Robo{
+
+            id:componenteRobo
+            x: parent.width/2
+            y: 50
+        }
+
         // Mouse Area sobre o campo que detecta ações sobre os elementos do campo como bola, robôs e obstáculos.
         MouseArea {
 
@@ -73,10 +80,13 @@ GridLayout {
 
                 // Chama a função da bola que checa se ela foi clicada e realiza as ações caso tenha sido.
                 componenteBola.bolaClicada(mouseXReal, mouseYReal, x, y, width, height);
+                componenteRobo.roboClicado(mouseXReal, mouseYReal, x, y, width, height)
             }
 
+            // Setup temporario, achar solução melhor (arrays e padronizando nome de funçao, por exemplo)
             onPositionChanged: {
 
+                //Bola
                 if (componenteBola.mouseEstaNaBola(mouseXReal,mouseYReal, componenteBola.centroBolaX, componenteBola.centroBolaY)) {
 
                     componenteBola.mouseOver = true;
@@ -88,6 +98,21 @@ GridLayout {
                     componenteBola.mouseOver = false;
                     componenteBola.mudaCor();
                 }
+                //----------------------------
+
+                //Robo
+                if (componenteRobo.mouseEstaNoRobo(mouseXReal,mouseYReal)) {
+
+                    componenteRobo.mouseOver = true;
+                    componenteRobo.mudaCor();
+                }
+
+                else if (componenteRobo.mouseOver === true) {
+
+                    componenteRobo.mouseOver = false;
+                    componenteRobo.mudaCor();
+                }
+                //----------------------------
             }
         }
     }

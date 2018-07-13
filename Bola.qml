@@ -38,13 +38,11 @@ Rectangle {
 
     Behavior on color {
 
-
         ColorAnimation {}
     }
 
     SequentialAnimation {
 
-        id: bounceAnimation
         loops: Animation.Infinite
         running: clicada
 
@@ -114,7 +112,7 @@ Rectangle {
 
             if (xMouse - width/2 < proporcao + xMouseArea) {
 
-                ajusteX = proporcao + xMouseArea - xMouse - width/2 ;
+                ajusteX = proporcao + xMouseArea - xMouse + width/2 ;
             }
 
             else if (xMouse + width/2 > xMouseArea + largMouseArea - proporcao) {
@@ -124,7 +122,7 @@ Rectangle {
 
             if (yMouse - height/2 < proporcao + yMouseArea) {
 
-                ajusteY = proporcao + yMouseArea - yMouse - height/2;
+                ajusteY = proporcao + yMouseArea - yMouse + height/2;
             }
 
             else if (yMouse + height/2 > yMouseArea + altMouseArea - proporcao) {
