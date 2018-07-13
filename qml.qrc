@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Campo.qml</file>
+        <file>TemplateSimulacao.qml</file>
+        <file>Bola.qml</file>
+        <file>Robo.qml</file>
+    </qresource>
+</RCC>
