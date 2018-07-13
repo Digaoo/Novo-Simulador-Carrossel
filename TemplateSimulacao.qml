@@ -80,7 +80,7 @@ GridLayout {
 
                 // Chama a função da bola que checa se ela foi clicada e realiza as ações caso tenha sido.
                 componenteBola.bolaClicada(mouseXReal, mouseYReal, x, y, width, height);
-                componenteRobo.roboClicado(mouseXReal, mouseYReal, x, y, width, height)
+                componenteRobo.roboClicado(mouseXReal, mouseYReal, x, y, width, height);
             }
 
             // Setup temporario, achar solução melhor (arrays e padronizando nome de funçao, por exemplo)

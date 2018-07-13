@@ -1,19 +1,25 @@
 import QtQuick 2.0
 
+import QtQuick 2.0
+
 Rectangle {
 
-    // Proporcao que baseando-se no tamanho disponível do pai, define o tamanho apropriado do robo.
+    // Proporcao que baseando-se no tamanho disponível do pai, define o tamanho apropriado do componente.
     property int proporcao:  Math.min(Math.floor(parent.width/170), Math.floor(parent.height/130))
     property bool clicado: false
     property bool mouseOver: false
 
+    property real corR: 0.5
+    property real corG: 0.5
+    property real corB: 0.5
+
     x:-1
     y:-1
-    width: 7.5 * proporcao
-    height: width
+    //width: 7.5 * proporcao
+    //height: width
 
-    id: roboRetangulo
-    color: "#333333"
+    id: componenteRetangulo
+    color: Qt.rgba(corR,corG,corB, 1)
 
     signal clicked
 
@@ -45,7 +51,7 @@ Rectangle {
 
         NumberAnimation {
 
-            target: roboRetangulo
+            target: componenteRetangulo
             properties: "scale"
             from: 1.0
             to: 1.5
@@ -54,7 +60,7 @@ Rectangle {
 
         NumberAnimation {
 
-            target: roboRetangulo
+            target: componenteRetangulo
             properties: "scale"
             from: 1.5
             to: 1.0
@@ -66,25 +72,27 @@ Rectangle {
 
         if (mouseOver) {
 
-            color = "#555555";
+            color = Qt.rgba(corR+0.2, corG+0.2, corB+0.2, 1);
         }
 
         else {
 
-            color = "#333333";
+            color = Qt.rgba(corR, corG, corB, 1);
         }
     }
 
     // Função que dada as coordenadas do mouse define se o robo foi clicado.
-    function mouseEstaNoRobo(xMouse, yMouse) {
+    function mouseEstaNoComponente(lista) {
 
-        return (xMouse >= x && xMouse <= x + width && yMouse >= y && yMouse <= y + height);
+        console.log("A função mouseEstaNoComponente deve ser implementada")
+
+        return true;
     }
 
-    function roboClicado(xMouse, yMouse, xMouseArea, yMouseArea, largMouseArea, altMouseArea) {
+    function componenteClicado(xMouse, yMouse, xMouseArea, yMouseArea, largMouseArea, altMouseArea, lista) {
 
         // O robo foi clicado ?
-        if(mouseEstaNoRobo(xMouse, yMouse)) {
+        if(mouseEstaNoComponente(lista)) {
 
             // Sim, então avise a ele que foi clicado.
             clicked();
@@ -122,31 +130,5 @@ Rectangle {
             y = yMouse - height/2 + ajusteY;
             clicked();
         }
-    }
-
-    Rectangle {
-
-        id: circuloSuperior
-        anchors.left: roboRetangulo.left
-        anchors.leftMargin: 0.25*proporcao
-        anchors.top: roboRetangulo.top
-        anchors.topMargin: 0.25*proporcao
-        width: parent.width/2
-        height: width
-        radius: width/2
-        color: Qt.rgba(Math.random(),Math.random(),Math.random(),1)
-    }
-
-    Rectangle {
-
-        id: circuloInferior
-        anchors.right: roboRetangulo.right
-        anchors.rightMargin: 0.25*proporcao
-        anchors.bottom: roboRetangulo.bottom
-        anchors.bottomMargin: 0.25*proporcao
-        width: parent.width/2
-        height: width
-        radius: width/2
-        color: Qt.rgba(Math.random(),Math.random(),Math.random(),1)
     }
 }

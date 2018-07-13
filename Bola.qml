@@ -70,6 +70,7 @@ Rectangle {
         if (mouseOver) {
 
             color = "#FFC966";
+            teste()
         }
 
         else {
