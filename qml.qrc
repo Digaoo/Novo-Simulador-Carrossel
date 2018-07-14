@@ -6,5 +6,6 @@
         <file>Bola.qml</file>
         <file>Robo.qml</file>
         <file>TemplateObjetos.qml</file>
+        <file>TemplateItemLog.qml</file>
     </qresource>
 </RCC>

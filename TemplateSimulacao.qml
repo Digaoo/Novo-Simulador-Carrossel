@@ -78,16 +78,16 @@ GridLayout {
 
             onClicked: {
 
-                // Chama a função da bola que checa se ela foi clicada e realiza as ações caso tenha sido.
-                componenteBola.bolaClicada(mouseXReal, mouseYReal, x, y, width, height);
-                componenteRobo.roboClicado(mouseXReal, mouseYReal, x, y, width, height);
+                // Chama a função que checa se o componente foi clicado e realiza as ações caso tenha sido.
+                componenteBola.componenteClicado(mouseXReal, mouseYReal, x, y, width, height);
+                componenteRobo.componenteClicado(mouseXReal, mouseYReal, x, y, width, height);
             }
 
             // Setup temporario, achar solução melhor (arrays e padronizando nome de funçao, por exemplo)
             onPositionChanged: {
 
                 //Bola
-                if (componenteBola.mouseEstaNaBola(mouseXReal,mouseYReal, componenteBola.centroBolaX, componenteBola.centroBolaY)) {
+                if (componenteBola.mouseEstaNoComponente(mouseXReal,mouseYReal, componenteBola.centroBolaX, componenteBola.centroBolaY)) {
 
                     componenteBola.mouseOver = true;
                     componenteBola.mudaCor();
@@ -101,7 +101,7 @@ GridLayout {
                 //----------------------------
 
                 //Robo
-                if (componenteRobo.mouseEstaNoRobo(mouseXReal,mouseYReal)) {
+                if (componenteRobo.mouseEstaNoComponente(mouseXReal,mouseYReal)) {
 
                     componenteRobo.mouseOver = true;
                     componenteRobo.mudaCor();
@@ -129,22 +129,26 @@ GridLayout {
         Layout.fillHeight: true
         Layout.fillWidth: false
 
-        // Este retângulo e seu filho representam uma caixa de logs onde serão disponibilizadas informações sobre os elementos do campo.
+        //Mudar para StackView e usar setas no fundo para trocar de elementos, permite mais informações e resolve problemas com espaço
         Rectangle {
 
-            border.color: "#000000"
+            border.color: "black"
             border.width: 1
+
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            Text {
+            GridLayout {
 
-                id: displayDados
-                text: qsTr("")
-                wrapMode: Text.WordWrap
-                Layout.fillHeight: true
-                Layout.fillWidth: true
+                width: parent.width
+                height: parent.height
+
+                TemplateItemLog{
+
+                    width: parent.width
+                }
             }
+
         }
 
         // Layout dos botões à direita do campo.
@@ -155,6 +159,7 @@ GridLayout {
             height: parent.height/2
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
             Layout.preferredHeight: parent.height/2
+            Layout.maximumHeight: parent.height/2
             Layout.fillWidth: true
 
             // Botão para colocar a bola.
@@ -163,6 +168,7 @@ GridLayout {
                 id: botaoNovaBola
                 text: qsTr("Nova Bola")
                 Layout.fillWidth: true
+                Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
@@ -172,6 +178,7 @@ GridLayout {
                 id: botaoNovoRobo
                 text: qsTr("Novo Robô")
                 Layout.fillWidth: true
+                Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
@@ -181,6 +188,7 @@ GridLayout {
                 id: botaoNovoObstaculo
                 text: qsTr("Novo Obstáculo")
                 Layout.fillWidth: true
+                Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
         }

@@ -72,7 +72,7 @@ Rectangle {
 
         if (mouseOver) {
 
-            color = Qt.rgba(corR+0.2, corG+0.2, corB+0.2, 1);
+            color = Qt.rgba(corR+0.1, corG+0.1, corB+0.1, 1);
         }
 
         else {
@@ -82,17 +82,17 @@ Rectangle {
     }
 
     // Função que dada as coordenadas do mouse define se o robo foi clicado.
-    function mouseEstaNoComponente(lista) {
+    function mouseEstaNoComponente(xMouse, yMouse) {
 
         console.log("A função mouseEstaNoComponente deve ser implementada")
 
         return true;
     }
 
-    function componenteClicado(xMouse, yMouse, xMouseArea, yMouseArea, largMouseArea, altMouseArea, lista) {
+    function componenteClicado(xMouse, yMouse, xMouseArea, yMouseArea, largMouseArea, altMouseArea) {
 
         // O robo foi clicado ?
-        if(mouseEstaNoComponente(lista)) {
+        if(mouseEstaNoComponente(xMouse, yMouse)) {
 
             // Sim, então avise a ele que foi clicado.
             clicked();
