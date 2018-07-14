@@ -138,17 +138,13 @@ GridLayout {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            GridLayout {
+            StackLayout {
 
-                width: parent.width
-                height: parent.height
-
-                TemplateItemLog{
-
-                    width: parent.width
-                }
+                id: layoutLog
+                anchors.fill: parent
+                anchors.margins: 1
+                currentIndex: 0
             }
-
         }
 
         // Layout dos botões à direita do campo.
@@ -170,6 +166,8 @@ GridLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+                onClicked: {}
             }
 
             // Botão para colocar os robôs.
@@ -180,6 +178,8 @@ GridLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+                onClicked: {}
             }
 
             // Botão para colocar os obstáculos.
@@ -190,6 +190,8 @@ GridLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+                onClicked: {}
             }
         }
     }
