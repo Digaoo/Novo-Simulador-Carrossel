@@ -83,11 +83,22 @@ GridLayout {
                 componenteRobo.componenteClicado(mouseXReal, mouseYReal, x, y, width, height);
             }
 
-            // Setup temporario, achar solução melhor (arrays e padronizando nome de funçao, por exemplo)
+            onPressed: {
+
+                componenteBola.componentePressionado(mouseXReal, mouseYReal);
+                componenteRobo.componentePressionado(mouseXReal, mouseYReal);
+            }
+
+            onReleased: {
+
+                componenteBola.componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
+                componenteRobo.componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
+            }
+
             onPositionChanged: {
 
                 //Bola
-                if (componenteBola.mouseEstaNoComponente(mouseXReal,mouseYReal, componenteBola.centroBolaX, componenteBola.centroBolaY)) {
+                if (componenteBola.mouseEstaNoComponente(mouseXReal,mouseYReal)) {
 
                     componenteBola.mouseOver = true;
                     componenteBola.mudaCor();
@@ -129,7 +140,6 @@ GridLayout {
         Layout.fillHeight: true
         Layout.fillWidth: false
 
-        //Mudar para StackView e usar setas no fundo para trocar de elementos, permite mais informações e resolve problemas com espaço
         Rectangle {
 
             border.color: "black"
