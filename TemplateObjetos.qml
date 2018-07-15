@@ -168,10 +168,10 @@ Rectangle {
     }
 
     // Função que cuida dos cliques no componente
-    function componenteClicado(xMouse, yMouse, xMouseArea, yMouseArea, largMouseArea, altMouseArea) {
+    function componenteClicado(xMouse, yMouse, xMouseArea, yMouseArea, largMouseArea, altMouseArea, mouseEstaMA) {
 
         // O componente foi clicado ?
-        if(mouseEstaNoComponente(xMouse, yMouse)) {
+        if(mouseEstaNoComponente(xMouse, yMouse) && mouseEstaMA && (xMouse === xPress || yMouse === yPress)) {
 
             // Sim, então avise a ele que foi clicado.
             clicked();
@@ -215,14 +215,9 @@ Rectangle {
             yRelease = yMouse - height/2 + ajustaCoordenadasY(yMouse, yMouseArea, altMouseArea);
 
             pressed();
-            componenteArrastado();
+            movimento.start();
 
             return;
         }
-    }
-
-    function componenteArrastado() {
-
-        movimento.start();
     }
 }

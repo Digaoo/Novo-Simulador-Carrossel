@@ -7,5 +7,6 @@
         <file>Robo.qml</file>
         <file>TemplateObjetos.qml</file>
         <file>TemplateItemLog.qml</file>
+        <file>Obstaculo.qml</file>
     </qresource>
 </RCC>

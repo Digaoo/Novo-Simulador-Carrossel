@@ -61,6 +61,13 @@ GridLayout {
             y: 50
         }
 
+        Obstaculo {
+
+            id:componenteObst
+            x: parent.width/2
+            y: parent.height/2 + 100
+        }
+
         // Mouse Area sobre o campo que detecta ações sobre os elementos do campo como bola, robôs e obstáculos.
         MouseArea {
 
@@ -76,23 +83,26 @@ GridLayout {
 
             hoverEnabled: true
 
+            // Chama a função que checa se o componente foi clicado e realiza as ações caso tenha sido.
             onClicked: {
 
-                // Chama a função que checa se o componente foi clicado e realiza as ações caso tenha sido.
-                componenteBola.componenteClicado(mouseXReal, mouseYReal, x, y, width, height);
-                componenteRobo.componenteClicado(mouseXReal, mouseYReal, x, y, width, height);
+                componenteBola.componenteClicado(mouseXReal, mouseYReal, x, y, width, height, containsMouse);
+                componenteRobo.componenteClicado(mouseXReal, mouseYReal, x, y, width, height, containsMouse);
+                componenteObst.componenteClicado(mouseXReal, mouseYReal, x, y, width, height, containsMouse);
             }
 
             onPressed: {
 
                 componenteBola.componentePressionado(mouseXReal, mouseYReal);
                 componenteRobo.componentePressionado(mouseXReal, mouseYReal);
+                componenteObst.componentePressionado(mouseXReal, mouseYReal);
             }
 
             onReleased: {
 
                 componenteBola.componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
                 componenteRobo.componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
+                componenteObst.componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
             }
 
             onPositionChanged: {
@@ -122,6 +132,20 @@ GridLayout {
 
                     componenteRobo.mouseOver = false;
                     componenteRobo.mudaCor();
+                }
+                //----------------------------
+
+                //Obstaculo
+                if (componenteObst.mouseEstaNoComponente(mouseXReal,mouseYReal)) {
+
+                    componenteObst.mouseOver = true;
+                    componenteObst.mudaCor();
+                }
+
+                else if (componenteObst.mouseOver === true) {
+
+                    componenteObst.mouseOver = false;
+                    componenteObst.mudaCor();
                 }
                 //----------------------------
             }
