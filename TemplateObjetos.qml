@@ -93,7 +93,7 @@ Rectangle {
 
             target: componenteRetangulo
             properties: "x"
-            from: xPress
+            from: x
             to: xRelease
             duration: (distanciaPressRelease / velocidade) * 1000
         }
@@ -102,7 +102,7 @@ Rectangle {
 
             target: componenteRetangulo
             properties: "y"
-            from: yPress
+            from: y
             to: yRelease
             duration: (distanciaPressRelease / velocidade)*1000
         }
@@ -200,8 +200,8 @@ Rectangle {
 
         if(mouseEstaNoComponente(xMouse, yMouse)) {
 
-            xPress = x;
-            yPress = y;
+            xPress = xMouse;
+            yPress = yMouse;
             pressed();
             return;
         }
@@ -214,9 +214,9 @@ Rectangle {
             xRelease = xMouse - width/2 + ajustaCoordenadasX(xMouse, xMouseArea, largMouseArea);
             yRelease = yMouse - height/2 + ajustaCoordenadasY(yMouse, yMouseArea, altMouseArea);
 
+            pressed();
             componenteArrastado();
 
-            pressed();
             return;
         }
     }
