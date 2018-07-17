@@ -13,7 +13,6 @@ TemplateObjetos {
     corG: 165/255
     corB: 0/255
 
-    //Ordem lista = xMouse,yMouse,xCentro,yCentro
     function mouseEstaNoComponente(xMouse, yMouse) {
 
         var distanciaMouseCentro = Math.pow(centroBolaX - xMouse, 2) + Math.pow(centroBolaY - yMouse, 2);

@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.3
+import QtQml 2.0
 
 // Layout em grade que dispõe o campo e elementos auxiliares.
 GridLayout {
@@ -11,6 +12,8 @@ GridLayout {
     rows: 2
     columns: 5
     anchors.centerIn: parent
+
+    property var componentes: []
 
     // Combo box que determina se o campo utilizado será o simulado ou o de um vídeo.
     ComboBox {
@@ -46,34 +49,12 @@ GridLayout {
         Layout.fillWidth: true
         Layout.columnSpan: 4
 
-        // A bola.
-        Bola{
-
-            id:componenteBola
-            x: parent.width/2
-            y: parent.height/2
-        }
-
-        Robo{
-
-            id:componenteRobo
-            x: parent.width/2
-            y: 50
-        }
-
-        Obstaculo {
-
-            id:componenteObst
-            x: parent.width/2
-            y: parent.height/2 + 100
-        }
-
         // Mouse Area sobre o campo que detecta ações sobre os elementos do campo como bola, robôs e obstáculos.
         MouseArea {
 
             id:componenteMouseCampo
 
-            property int proporcaoMouse: componenteBola.proporcao
+            property int proporcaoMouse: componenteCampo.proporcao
             property int mouseXReal: mouseX + x
             property int mouseYReal: mouseY + y
 
@@ -86,68 +67,44 @@ GridLayout {
             // Chama a função que checa se o componente foi clicado e realiza as ações caso tenha sido.
             onClicked: {
 
-                componenteBola.componenteClicado(mouseXReal, mouseYReal, x, y, width, height, containsMouse);
-                componenteRobo.componenteClicado(mouseXReal, mouseYReal, x, y, width, height, containsMouse);
-                componenteObst.componenteClicado(mouseXReal, mouseYReal, x, y, width, height, containsMouse);
+                for (var i=0; i<componentes.length; i++) {
+
+                    componentes[i].componenteClicado(mouseXReal, mouseYReal, x, y, width, height, containsMouse);
+                }
             }
 
             onPressed: {
 
-                componenteBola.componentePressionado(mouseXReal, mouseYReal);
-                componenteRobo.componentePressionado(mouseXReal, mouseYReal);
-                componenteObst.componentePressionado(mouseXReal, mouseYReal);
+                for (var i=0; i<componentes.length; i++) {
+
+                    componentes[i].componentePressionado(mouseXReal, mouseYReal);
+                }
             }
 
             onReleased: {
 
-                componenteBola.componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
-                componenteRobo.componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
-                componenteObst.componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
+                for (var i=0; i<componentes.length; i++) {
+
+                    componentes[i].componenteSolto(mouseXReal, mouseYReal, x, y, width, height);
+                }
             }
 
             onPositionChanged: {
 
-                //Bola
-                if (componenteBola.mouseEstaNoComponente(mouseXReal,mouseYReal)) {
+                for (var i=0; i<componentes.length; i++) {
 
-                    componenteBola.mouseOver = true;
-                    componenteBola.mudaCor();
+                    if (componentes[i].mouseEstaNoComponente(mouseXReal,mouseYReal)) {
+
+                        componentes[i].mouseOver = true;
+                        componentes[i].mudaCor();
+                    }
+
+                    else if (componentes[i].mouseOver === true) {
+
+                        componentes[i].mouseOver = false;
+                        componentes[i].mudaCor();
+                    }
                 }
-
-                else if (componenteBola.mouseOver === true) {
-
-                    componenteBola.mouseOver = false;
-                    componenteBola.mudaCor();
-                }
-                //----------------------------
-
-                //Robo
-                if (componenteRobo.mouseEstaNoComponente(mouseXReal,mouseYReal)) {
-
-                    componenteRobo.mouseOver = true;
-                    componenteRobo.mudaCor();
-                }
-
-                else if (componenteRobo.mouseOver === true) {
-
-                    componenteRobo.mouseOver = false;
-                    componenteRobo.mudaCor();
-                }
-                //----------------------------
-
-                //Obstaculo
-                if (componenteObst.mouseEstaNoComponente(mouseXReal,mouseYReal)) {
-
-                    componenteObst.mouseOver = true;
-                    componenteObst.mudaCor();
-                }
-
-                else if (componenteObst.mouseOver === true) {
-
-                    componenteObst.mouseOver = false;
-                    componenteObst.mudaCor();
-                }
-                //----------------------------
             }
         }
     }
@@ -201,7 +158,17 @@ GridLayout {
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-                onClicked: {}
+                onClicked: {
+
+                    var novaBola = Qt.createComponent("Bola.qml");
+
+                    var x = componenteCampo.xAleatorioCampo(4.75*componenteCampo.proporcao);
+                    var y = componenteCampo.yAleatorioCampo(4.75*componenteCampo.proporcao);
+
+                    componentes.push(novaBola.createObject(componenteCampo, {"x":x, "y":y}));
+
+                    botaoNovaBola.enabled = false;
+                }
             }
 
             // Botão para colocar os robôs.
@@ -213,7 +180,15 @@ GridLayout {
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-                onClicked: {}
+                onClicked: {
+
+                    var novoRobo = Qt.createComponent("Robo.qml");
+
+                    var x = componenteCampo.xAleatorioCampo(7.5*componenteCampo.proporcao);
+                    var y = componenteCampo.yAleatorioCampo(7.5*componenteCampo.proporcao);
+
+                    componentes.push(novoRobo.createObject(componenteCampo, {"x":x, "y":y}));
+                }
             }
 
             // Botão para colocar os obstáculos.
@@ -225,7 +200,15 @@ GridLayout {
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-                onClicked: {}
+                onClicked: {
+
+                    var novoObst = Qt.createComponent("Obstaculo.qml");
+
+                    var x = componenteCampo.xAleatorioCampo(3*componenteCampo.proporcao);
+                    var y = componenteCampo.yAleatorioCampo(3*componenteCampo.proporcao);
+
+                    componentes.push(novoObst.createObject(componenteCampo, {"x":x, "y":y}));
+                }
             }
         }
     }

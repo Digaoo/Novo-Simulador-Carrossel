@@ -10,10 +10,10 @@ Rectangle {
     border.color: "black"
     border.width: 1
 
+    property int proporcao:  Math.min(Math.floor(canvas.width/170), Math.floor(canvas.height/130))
+
     // Este retângulo representa todas as paredeas do campo (com exceção das paredes dos gols).
     Rectangle {
-
-        property int proporcao:  Math.min(Math.floor(canvas.width/170), Math.floor(canvas.height/130))
 
         id: paredes
         width: 170*proporcao - 20*proporcao
@@ -25,8 +25,8 @@ Rectangle {
         Rectangle {
 
             id: gramado
-            width: paredes.width - 2*paredes.proporcao
-            height: paredes.height - 2*paredes.proporcao
+            width: paredes.width - 2*proporcao
+            height: paredes.height - 2*proporcao
             color: "#526F35"
             anchors.centerIn: parent
         }
@@ -35,8 +35,8 @@ Rectangle {
         Rectangle {
 
             id: linhaGolEsquerdo
-            width: paredes.proporcao
-            height: 40*paredes.proporcao - 2*paredes.proporcao
+            width: proporcao
+            height: 40*proporcao - 2*proporcao
             color: "#FFFFFF"
             anchors.left: paredes.left
             anchors.verticalCenter: paredes.verticalCenter
@@ -46,8 +46,8 @@ Rectangle {
         Rectangle {
 
             id: linhaCirculoAreaEsquerda
-            width: 10*paredes.proporcao
-            height: 20*paredes.proporcao
+            width: 10*proporcao
+            height: 20*proporcao
             radius: width*0.5
             color: "#FFFFFF"
             anchors.horizontalCenter: linhaAreaEsquerda.right
@@ -58,8 +58,8 @@ Rectangle {
         Rectangle {
 
             id: gramadoCirculoAreaEsquerda
-            width: 10*paredes.proporcao - 2*paredes.proporcao
-            height: 20*paredes.proporcao - 2*paredes.proporcao
+            width: 10*proporcao - 2*proporcao
+            height: 20*proporcao - 2*proporcao
             radius: width*0.5
             color: "#526F35"
             anchors.centerIn: linhaCirculoAreaEsquerda
@@ -69,8 +69,8 @@ Rectangle {
         Rectangle {
 
             id: linhaAreaEsquerda
-            width: 15*paredes.proporcao - paredes.proporcao
-            height: 70*paredes.proporcao
+            width: 15*proporcao - proporcao
+            height: 70*proporcao
             color: "#FFFFFF"
             anchors.left: gramado.left
             anchors.verticalCenter: paredes.verticalCenter
@@ -80,8 +80,8 @@ Rectangle {
         Rectangle {
 
             id: gramadoAreaEsquerda
-            width: 15*paredes.proporcao - 2* paredes.proporcao
-            height: 70*paredes.proporcao - 2* paredes.proporcao
+            width: 15*proporcao - 2* proporcao
+            height: 70*proporcao - 2* proporcao
             color: "#526F35"
             anchors.left: gramado.left
             anchors.verticalCenter: paredes.verticalCenter
@@ -91,8 +91,8 @@ Rectangle {
         Rectangle {
 
             id: linhaCirculoMeioCampo
-            width: 40*paredes.proporcao
-            height: 40*paredes.proporcao
+            width: 40*proporcao
+            height: 40*proporcao
             radius: width*0.5
             color: "#FFFFFF"
             anchors.centerIn: gramado
@@ -102,8 +102,8 @@ Rectangle {
         Rectangle {
 
             id: gramadoCirculoMeioCampo
-            width: 40*paredes.proporcao - 2*paredes.proporcao
-            height: 40*paredes.proporcao - 2*paredes.proporcao
+            width: 40*proporcao - 2*proporcao
+            height: 40*proporcao - 2*proporcao
             radius: width*0.5
             color: "#526F35"
             anchors.centerIn: gramado
@@ -113,7 +113,7 @@ Rectangle {
         Rectangle {
 
             id: linhaMeioCampo
-            width: paredes.proporcao
+            width: proporcao
             height: gramado.height
             color: "#FFFFFF"
             anchors.centerIn: gramado
@@ -123,8 +123,8 @@ Rectangle {
         Rectangle {
 
             id: linhaGolDireito
-            width: paredes.proporcao
-            height: 40*paredes.proporcao - 2*paredes.proporcao
+            width: proporcao
+            height: 40*proporcao - 2*proporcao
             color: "#FFFFFF"
             anchors.right: paredes.right
             anchors.verticalCenter: paredes.verticalCenter
@@ -134,8 +134,8 @@ Rectangle {
         Rectangle {
 
             id: linhaCirculoAreaDireita
-            width: 10*paredes.proporcao
-            height: 20*paredes.proporcao
+            width: 10*proporcao
+            height: 20*proporcao
             radius: width*0.5
             color: "#FFFFFF"
             anchors.horizontalCenter: linhaAreaDireita.left
@@ -146,8 +146,8 @@ Rectangle {
         Rectangle {
 
             id: gramadoCirculoAreaDireita
-            width: 10*paredes.proporcao - 2*paredes.proporcao
-            height: 20*paredes.proporcao - 2*paredes.proporcao
+            width: 10*proporcao - 2*proporcao
+            height: 20*proporcao - 2*proporcao
             radius: width*0.5
             color: "#526F35"
             anchors.centerIn: linhaCirculoAreaDireita
@@ -157,8 +157,8 @@ Rectangle {
         Rectangle {
 
             id: linhaAreaDireita
-            width: 15*paredes.proporcao - paredes.proporcao
-            height: 70*paredes.proporcao
+            width: 15*proporcao - proporcao
+            height: 70*proporcao
             color: "#FFFFFF"
             anchors.right: gramado.right
             anchors.verticalCenter: paredes.verticalCenter
@@ -168,8 +168,8 @@ Rectangle {
         Rectangle {
 
             id: gramadoAreaDireita
-            width: 15*paredes.proporcao - 2* paredes.proporcao
-            height: 70*paredes.proporcao - 2* paredes.proporcao
+            width: 15*proporcao - 2* proporcao
+            height: 70*proporcao - 2* proporcao
             color: "#526F35"
             anchors.right: gramado.right
             anchors.verticalCenter: paredes.verticalCenter
@@ -180,8 +180,8 @@ Rectangle {
     Rectangle {
 
         id: paredeGolEsquerdo
-        width: 10*paredes.proporcao - paredes.proporcao
-        height: 40*paredes.proporcao
+        width: 10*proporcao - proporcao
+        height: 40*proporcao
         color: "#6f370f"
         anchors.right: paredes.left
         anchors.verticalCenter: paredes.verticalCenter
@@ -190,8 +190,8 @@ Rectangle {
         Rectangle {
 
             id: gramadoGolEsquerdo
-            width: paredeGolEsquerdo.width - paredes.proporcao
-            height: paredeGolEsquerdo.height - 2*paredes.proporcao
+            width: paredeGolEsquerdo.width - proporcao
+            height: paredeGolEsquerdo.height - 2*proporcao
             color: "#526F35"
             anchors.right: paredeGolEsquerdo.right
             anchors.verticalCenter: paredeGolEsquerdo.verticalCenter
@@ -202,8 +202,8 @@ Rectangle {
     Rectangle {
 
         id: paredeGolDireito
-        width: 10*paredes.proporcao - paredes.proporcao
-        height: 40*paredes.proporcao
+        width: 10*proporcao - proporcao
+        height: 40*proporcao
         color: "#6f370f"
         anchors.left: paredes.right
         anchors.verticalCenter: paredes.verticalCenter
@@ -212,14 +212,28 @@ Rectangle {
         Rectangle {
 
             id: gramadoGolDireito
-            width: paredeGolDireito.width - paredes.proporcao
-            height: paredeGolDireito.height - 2*paredes.proporcao
+            width: paredeGolDireito.width - proporcao
+            height: paredeGolDireito.height - 2*proporcao
             color: "#526F35"
             anchors.left: paredeGolDireito.left
             anchors.verticalCenter: paredeGolDireito.verticalCenter
         }
     }
 
+    function xAleatorioCampo (larguraObj) {
 
+        var max = paredes.width - larguraObj - proporcao;
+        var min = paredes.x + larguraObj + proporcao;
+
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function yAleatorioCampo (alturaObj) {
+
+        var max = paredes.height - alturaObj - proporcao;
+        var min = paredes.y + alturaObj + proporcao;
+
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
 }
 
