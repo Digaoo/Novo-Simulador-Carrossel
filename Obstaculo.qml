@@ -21,7 +21,34 @@ TemplateObjetos {
 
             pressed();
 
+            var xFinal;
             var yFinal;
+
+            if (xMouse >= xMouseArea + largMouseArea) {
+
+                xFinal = xMouseArea + largMouseArea - proporcao;
+            }
+
+            else if (xMouse <= xMouseArea) {
+
+                xFinal = xMouseArea + 2*proporcao;
+            }
+
+            else {
+
+                xFinal = xMouse;
+            }
+
+            if (xFinal > x) {
+
+                width = xFinal - x;
+            }
+
+            else {
+
+                width = x - xFinal;
+                x = xFinal - proporcao;
+            }
 
             if (yMouse >= yMouseArea + altMouseArea) {
 
@@ -47,6 +74,16 @@ TemplateObjetos {
 
                 height = y - yFinal;
                 y = yFinal - proporcao;
+            }
+
+            if(height < 3*proporcao) {
+
+                height = 3*proporcao;
+            }
+
+            if (width < 3*proporcao) {
+
+                width = 3*proporcao;
             }
 
             return;
