@@ -144,6 +144,35 @@ GridLayout {
 
                 property int numPag: 0
 
+                //Quando esta propriedade é modificada o objeto e seu log do indice passado serão excluídos.
+                property int indice: -1
+
+                onIndiceChanged: {
+
+                    if (indice === -1) {
+
+                        return;
+                    }
+
+                    componentes[indice].destroy();
+                    componentes.splice(indice,1);
+
+                    if (logs[indice].tipo === "Bola") {
+
+                        botaoNovaBola.enabled = true;
+                    }
+
+                    logs[indice].destroy();
+                    logs.splice(indice,1);
+
+                    for (var i=indice; i < logs.length; i++) {
+
+                        logs[i].indice -=1;
+                    }
+
+                    indice = -1;
+                }
+
                 onCountChanged: {
 
                     if (count > numPag) {
@@ -152,14 +181,29 @@ GridLayout {
 
                             botaoProximo.enabled = true;
                         }
-
-                        numPag = count;
                     }
 
                     else if (count < numPag) {
 
-                        console.log("pagina Excluida");
+                        if (count < 2) {
+
+                            botaoAnterior.enabled = false;
+                            botaoProximo.enabled = false;
+                        }
+
+                        else if (currentIndex === count - 1) {
+
+                            botaoProximo.enabled = false;
+                        }
+
+                        else if (currentIndex === count) {
+
+                            currentIndex -=1;
+                            botaoProximo.enabled = false;
+                        }
                     }
+
+                    numPag = count;
                 }
             }
 
@@ -345,6 +389,9 @@ GridLayout {
                         "corCirculoSuperior": componentes[componentes.length-1].corCirculoSuperior,
                         "corCirculoInferior": componentes[componentes.length-1].corCirculoInferior
                     }));
+
+                    componentes[componentes.length-1].logAssociado = logs[logs.length -1];
+                    logs[logs.length -1].objetoAssociado = componentes[componentes.length-1];
                 }
             }
 
@@ -392,6 +439,9 @@ GridLayout {
                         "yAtual":y/componenteCampo.proporcao,
                         "vel":50
                     }));
+
+                    componentes[componentes.length-1].logAssociado = logs[logs.length -1];
+                    logs[logs.length -1].objetoAssociado = componentes[componentes.length-1];
                 }
             }
         }

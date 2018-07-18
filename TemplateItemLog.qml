@@ -1,8 +1,11 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.3
+import QtGraphicalEffects 1.0
 
 Page{
+
+    id:pagina
 
     anchors.fill: parent
 
@@ -126,6 +129,17 @@ Page{
                 color: "#8b4513"
                 visible: false
                 anchors.centerIn: parent
+
+                RadialGradient {
+
+                    anchors.fill: parent
+
+                    gradient: Gradient {
+
+                        GradientStop { position: 0.0; color: obstaculo.color }
+                        GradientStop { position: 0.85; color: "black" }
+                    }
+                }
             }
 
             Image {
@@ -179,7 +193,17 @@ Page{
                     objetoAssociado.velocidade = value;
             }
         }
+
+        Button {
+
+            text: qsTr("Excluir")
+            scale: 0.6
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            onClicked: {
+
+                pagina.parent.indice = indice;
+            }
+        }
     }
 }
-
-

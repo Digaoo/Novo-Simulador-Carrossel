@@ -1,13 +1,26 @@
 import QtQuick 2.0
+import QtGraphicalEffects 1.0
 
 TemplateObjetos {
 
+    id: obstaculo
     width: 3 * proporcao
     height: width
 
     corR: 139/255
     corG: 69/255
     corB: 19/255
+
+    RadialGradient {
+
+        anchors.fill: parent
+
+        gradient: Gradient {
+
+            GradientStop { position: 0.0; color: obstaculo.color }
+            GradientStop { position: 0.85; color: "black" }
+        }
+    }
 
     // Função que dada as coordenadas do mouse define se o robo foi clicado.
     function mouseEstaNoComponente(xMouse, yMouse) {
