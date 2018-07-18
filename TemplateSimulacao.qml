@@ -14,6 +14,7 @@ GridLayout {
     anchors.centerIn: parent
 
     property var componentes: []
+    property var logs: []
 
     // Combo box que determina se o campo utilizado será o simulado ou o de um vídeo.
     ComboBox {
@@ -73,6 +74,7 @@ GridLayout {
                 }
             }
 
+            // Chama a função que checa se o componente foi pressionado e realiza as ações caso tenha sido.
             onPressed: {
 
                 for (var i=0; i<componentes.length; i++) {
@@ -81,6 +83,7 @@ GridLayout {
                 }
             }
 
+            // Chama a função que checa se o componente foi solto e realiza as ações caso tenha sido.
             onReleased: {
 
                 for (var i=0; i<componentes.length; i++) {
@@ -89,6 +92,7 @@ GridLayout {
                 }
             }
 
+            // Chama a função quando o mouse é movido, para checar se o mouse está sobre o objeto.
             onPositionChanged: {
 
                 for (var i=0; i<componentes.length; i++) {
@@ -131,10 +135,103 @@ GridLayout {
 
             StackLayout {
 
+                y:1
                 id: layoutLog
-                anchors.fill: parent
-                anchors.margins: 1
+                width: parent.width - 2
+                height: parent.height - mudaLogs.height
+                anchors.horizontalCenter: parent.horizontalCenter
                 currentIndex: 0
+
+                property int numPag: 0
+
+                onCountChanged: {
+
+                    if (count > numPag) {
+
+                        if (count > 1) {
+
+                            botaoProximo.enabled = true;
+                        }
+
+                        numPag = count;
+                    }
+
+                    else if (count < numPag) {
+
+                        console.log("pagina Excluida");
+                    }
+                }
+            }
+
+            RowLayout {
+
+                id: mudaLogs
+                width: parent.width - 2
+                height: children.height
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 0
+                anchors.margins: 1
+
+                Button {
+
+                    id: botaoAnterior
+                    Layout.maximumWidth: parent.width/2
+                    Layout.maximumHeight: font.pointSize*2
+                    text: qsTr("<b>◀</b>")
+                    enabled: false
+
+                    onClicked: {
+
+                        if (layoutLog.currentIndex - 1 > 0) {
+
+                            layoutLog.currentIndex -= 1;
+                        }
+
+                        else if (layoutLog.currentIndex - 1 === 0) {
+
+                            layoutLog.currentIndex -= 1;
+                            enabled=false;
+                        }
+
+                        else {
+
+                            enabled=false;
+                        }
+
+                        botaoProximo.enabled = true;
+                    }
+                }
+
+                Button {
+
+                    id: botaoProximo
+                    Layout.maximumWidth: parent.width/2
+                    Layout.maximumHeight: font.pointSize*2
+                    text: qsTr("<b>▶</b>")
+                    enabled: false
+
+                    onClicked: {
+
+                        if (layoutLog.currentIndex + 1 < layoutLog.count - 1) {
+
+                            layoutLog.currentIndex += 1;
+                        }
+
+                        else if (layoutLog.currentIndex + 1 === layoutLog.count - 1) {
+
+                            layoutLog.currentIndex += 1;
+                            enabled=false;
+                        }
+
+                        else {
+
+                            enabled=false;
+                        }
+
+                        botaoAnterior.enabled = true;
+                    }
+                }
             }
         }
 
@@ -161,11 +258,42 @@ GridLayout {
                 onClicked: {
 
                     var novaBola = Qt.createComponent("Bola.qml");
+                    var novoLog = Qt.createComponent("TemplateItemLog.qml");
 
                     var x = componenteCampo.xAleatorioCampo(4.75*componenteCampo.proporcao);
                     var y = componenteCampo.yAleatorioCampo(4.75*componenteCampo.proporcao);
 
+                    if( novaBola.status !== Component.Ready ){
+
+                        if( novaBola.status === Component.Error )
+
+                            console.debug("Erro:"+ novaBola.errorString());
+
+                        return;
+                    }
+
                     componentes.push(novaBola.createObject(componenteCampo, {"x":x, "y":y}));
+
+                    if( novoLog.status !== Component.Ready ){
+
+                        if( novoLog.status === Component.Error )
+
+                            console.debug("Erro:"+ novoLog.errorString());
+
+                        return;
+                    }
+
+                    logs.push(novoLog.createObject(layoutLog, {
+                        "tipo":"Bola",
+                        "indice":componentes.length-1,
+                        "xAtual":x/componenteCampo.proporcao,
+                        "yAtual":y/componenteCampo.proporcao,
+                        "vel":50
+                    }));
+
+
+                    componentes[componentes.length-1].logAssociado = logs[logs.length -1];
+                    logs[logs.length -1].objetoAssociado = componentes[componentes.length-1];
 
                     botaoNovaBola.enabled = false;
                 }
@@ -183,11 +311,40 @@ GridLayout {
                 onClicked: {
 
                     var novoRobo = Qt.createComponent("Robo.qml");
+                    var novoLog = Qt.createComponent("TemplateItemLog.qml");
 
                     var x = componenteCampo.xAleatorioCampo(7.5*componenteCampo.proporcao);
                     var y = componenteCampo.yAleatorioCampo(7.5*componenteCampo.proporcao);
 
+                    if( novoRobo.status !== Component.Ready ){
+
+                        if( novoRobo.status === Component.Error )
+
+                            console.debug("Erro:"+ novoRobo.errorString());
+
+                        return;
+                    }
+
                     componentes.push(novoRobo.createObject(componenteCampo, {"x":x, "y":y}));
+
+                    if( novoLog.status !== Component.Ready ){
+
+                        if( novoLog.status === Component.Error )
+
+                            console.debug("Erro:"+ novoLog.errorString());
+
+                        return;
+                    }
+
+                    logs.push(novoLog.createObject(layoutLog, {
+                        "tipo":"Robo",
+                        "indice":componentes.length-1,
+                        "xAtual":x/componenteCampo.proporcao,
+                        "yAtual":y/componenteCampo.proporcao,
+                        "vel":50,
+                        "corCirculoSuperior": componentes[componentes.length-1].corCirculoSuperior,
+                        "corCirculoInferior": componentes[componentes.length-1].corCirculoInferior
+                    }));
                 }
             }
 
@@ -203,11 +360,38 @@ GridLayout {
                 onClicked: {
 
                     var novoObst = Qt.createComponent("Obstaculo.qml");
+                    var novoLog = Qt.createComponent("TemplateItemLog.qml");
 
                     var x = componenteCampo.xAleatorioCampo(3*componenteCampo.proporcao);
                     var y = componenteCampo.yAleatorioCampo(3*componenteCampo.proporcao);
 
+                    if( novoObst.status !== Component.Ready ){
+
+                        if( novoObst.status === Component.Error )
+
+                            console.debug("Erro:"+ novoObst.errorString());
+
+                        return;
+                    }
+
                     componentes.push(novoObst.createObject(componenteCampo, {"x":x, "y":y}));
+
+                    if( novoLog.status !== Component.Ready ){
+
+                        if( novoLog.status === Component.Error )
+
+                            console.debug("Erro:"+ novoLog.errorString());
+
+                        return;
+                    }
+
+                    logs.push(novoLog.createObject(layoutLog, {
+                        "tipo":"Obstaculo",
+                        "indice":componentes.length-1,
+                        "xAtual":x/componenteCampo.proporcao,
+                        "yAtual":y/componenteCampo.proporcao,
+                        "vel":50
+                    }));
                 }
             }
         }

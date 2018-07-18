@@ -31,6 +31,8 @@ Rectangle {
     // Velocidade do robo
     property int velocidade: 50
 
+    property TemplateItemLog logAssociado: null
+
     x:-1
     y:-1
 
@@ -56,6 +58,20 @@ Rectangle {
     Behavior on color {
 
         ColorAnimation {}
+    }
+
+    onXChanged: {
+
+        if (logAssociado !== null)
+
+            logAssociado.xAtual = Math.round(x/proporcao);
+    }
+
+    onYChanged: {
+
+        if (logAssociado !== null)
+
+            logAssociado.yAtual = Math.round(y/proporcao);
     }
 
     // Animação para mostrar que o componente foi selecionado
@@ -106,8 +122,6 @@ Rectangle {
             to: yRelease
             duration: (distanciaPressRelease / velocidade)*1000
         }
-
-
     }
 
     // Função que torna a cor do componente mais clara caso o mouse esteja sobre ele

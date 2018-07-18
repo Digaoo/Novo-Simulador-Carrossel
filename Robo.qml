@@ -9,6 +9,9 @@ TemplateObjetos {
     corG: 50/255
     corB: 50/255
 
+    property color corCirculoSuperior: Qt.rgba(Math.random(),Math.random(),Math.random(),1)
+    property color corCirculoInferior: Qt.rgba(Math.random(),Math.random(),Math.random(),1)
+
     // Função que dada as coordenadas do mouse define se o robo foi clicado.
     function mouseEstaNoComponente(xMouse, yMouse) {
 
@@ -25,7 +28,7 @@ TemplateObjetos {
         width: parent.width/2
         height: width
         radius: width/2
-        color: Qt.rgba(Math.random(),Math.random(),Math.random(),1)
+        color: corCirculoSuperior
     }
 
     Rectangle {
@@ -38,6 +41,6 @@ TemplateObjetos {
         width: parent.width/2
         height: width
         radius: width/2
-        color: Qt.rgba(Math.random(),Math.random(),Math.random(),1)
+        color: corCirculoInferior
     }
 }

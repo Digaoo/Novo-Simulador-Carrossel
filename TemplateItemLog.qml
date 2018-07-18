@@ -4,8 +4,7 @@ import QtQuick.Controls 2.3
 
 Page{
 
-    width: parent.width
-    height: elementos.height
+    anchors.fill: parent
 
     property string tipo: "Padrão"
     property int indice: 0
@@ -13,6 +12,11 @@ Page{
     property int yAtual: 100
     property int vel: 5
     property int tamFig: 40
+
+    property var objetoAssociado: null
+
+    property color corCirculoSuperior: "yellow"
+    property color corCirculoInferior: "purple"
 
     onTipoChanged: {
 
@@ -75,7 +79,7 @@ Page{
                 height: tamFig
                 width: height
                 radius: width/2
-                color: "#ffa500"
+                color:  "#ffa500"
                 visible: false
                 anchors.centerIn: parent
             }
@@ -94,7 +98,7 @@ Page{
                     height: tamFig/2
                     width: height
                     radius: width/2
-                    color: "yellow"
+                    color: corCirculoSuperior
                     anchors.left: parent.left
                     anchors.leftMargin: tamFig/20
                     anchors.top: parent.top
@@ -106,7 +110,7 @@ Page{
                     height: tamFig/2
                     width: height
                     radius: width/2
-                    color: "purple"
+                    color: corCirculoInferior
                     anchors.right: parent.right
                     anchors.rightMargin: tamFig/20
                     anchors.bottom: parent.bottom
@@ -120,8 +124,6 @@ Page{
                 height: tamFig
                 width: height
                 color: "#8b4513"
-                border.color: "black"
-                border.width: 1
                 visible: false
                 anchors.centerIn: parent
             }
@@ -169,31 +171,13 @@ Page{
             value: vel
             scale: 0.6
             anchors.horizontalCenter: parent.horizontalCenter
-        }
-    }
 
-    footer: RowLayout {
+            onValueChanged: {
 
-        width: parent.width
-        height: children.height
-        spacing: 0
+                if (objetoAssociado !== null)
 
-        Button {
-
-            id: botaoAnterior
-            Layout.maximumWidth: parent.width/2
-            Layout.maximumHeight: font.pointSize*2
-            text: qsTr("<b>◀</b>")
-            anchors.margins: 1
-        }
-
-        Button {
-
-            id: botaoProximo
-            Layout.maximumWidth: parent.width/2
-            Layout.maximumHeight: font.pointSize*2
-            text: qsTr("<b>▶</b>")
-            anchors.margins: 1
+                    objetoAssociado.velocidade = value;
+            }
         }
     }
 }
