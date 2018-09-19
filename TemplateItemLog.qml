@@ -50,159 +50,168 @@ Page{
         }
     }
 
-    header: Label {
+    ScrollView {
 
-        text: qsTr('<b>'+tipo+' ('+indice+')</b>')
-        font.pixelSize: 12
-        padding: 10
-        color: "white"
+        anchors.fill: parent
+        clip: true
 
-        background: Rectangle {
-            color: "#2A2A2A"
-        }
-    }
+        ColumnLayout {
 
-    ColumnLayout {
-
-        id: elementos
-        width: parent.width
-        height: children.height
-        anchors.centerIn: parent
-
-        Item {
-
-            id: figura
+            id: elementos
             width: parent.width
-            height: tamFig+10
-            anchors.horizontalCenter: parent.horizontalCenter
+            height: children.height
+            anchors.top: parent.top
 
-            Rectangle {
+            Label {
 
-                id: bola
-                height: tamFig
-                width: height
-                radius: width/2
-                color:  "#ffa500"
-                visible: false
-                anchors.centerIn: parent
+                text: qsTr('<b>'+tipo+' ('+indice+')</b>')
+                font.pixelSize: 12
+                padding: 10
+                color: "white"
+                anchors.top: parent.top
+
+                background: Rectangle {
+                    color: "#2A2A2A"
+
+                    width: elementos.width
+                }
             }
 
-            Rectangle {
+            Item {
 
-                id: robo
-                height: tamFig
-                width: height
-                color: "#333333"
-                visible: false
-                anchors.centerIn: parent
+                id: figura
+                width: parent.width
+                height: tamFig+10
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 Rectangle {
 
-                    height: tamFig/2
+                    id: bola
+                    height: tamFig
                     width: height
                     radius: width/2
-                    color: corCirculoSuperior
-                    anchors.left: parent.left
-                    anchors.leftMargin: tamFig/20
-                    anchors.top: parent.top
-                    anchors.topMargin: tamFig/20
+                    color:  "#ffa500"
+                    visible: false
+                    anchors.centerIn: parent
                 }
 
                 Rectangle {
 
-                    height: tamFig/2
+                    id: robo
+                    height: tamFig
                     width: height
-                    radius: width/2
-                    color: corCirculoInferior
-                    anchors.right: parent.right
-                    anchors.rightMargin: tamFig/20
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: tamFig/20
-                }
-            }
+                    color: "#333333"
+                    visible: false
+                    anchors.centerIn: parent
 
-            Rectangle {
+                    Rectangle {
 
-                id: obstaculo
-                height: tamFig
-                width: height
-                color: "#8b4513"
-                visible: false
-                anchors.centerIn: parent
+                        height: tamFig/2
+                        width: height
+                        radius: width/2
+                        color: corCirculoSuperior
+                        anchors.left: parent.left
+                        anchors.leftMargin: tamFig/20
+                        anchors.top: parent.top
+                        anchors.topMargin: tamFig/20
+                    }
 
-                RadialGradient {
+                    Rectangle {
 
-                    anchors.fill: parent
-
-                    gradient: Gradient {
-
-                        GradientStop { position: 0.0; color: obstaculo.color }
-                        GradientStop { position: 0.85; color: "black" }
+                        height: tamFig/2
+                        width: height
+                        radius: width/2
+                        color: corCirculoInferior
+                        anchors.right: parent.right
+                        anchors.rightMargin: tamFig/20
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: tamFig/20
                     }
                 }
+
+                Rectangle {
+
+                    id: obstaculo
+                    height: tamFig
+                    width: height
+                    color: "#8b4513"
+                    visible: false
+                    anchors.centerIn: parent
+
+                    RadialGradient {
+
+                        anchors.fill: parent
+
+                        gradient: Gradient {
+
+                            GradientStop { position: 0.0; color: obstaculo.color }
+                            GradientStop { position: 0.85; color: "black" }
+                        }
+                    }
+                }
+
+                Image {
+
+                    id: padrao
+                    width: tamFig
+                    fillMode: Image.PreserveAspectFit
+                    source: "pontoInt.png"
+                    visible: true
+                    anchors.centerIn: parent
+                }
             }
 
-            Image {
+            Label {
 
-                id: padrao
-                width: tamFig
-                fillMode: Image.PreserveAspectFit
-                source: "pontoInt.png"
-                visible: true
-                anchors.centerIn: parent
+                id:labelCoords
+                font.pointSize:10
+                text: '<b>Coordenadas:</b>'
+                anchors.horizontalCenter: parent.horizontalCenter
+                padding: 10
+
             }
-        }
 
-        Label {
+            Text {
 
-            id:labelCoords
-            font.pointSize:10
-            text: '<b>Coordenadas:</b>'
-            anchors.horizontalCenter: parent.horizontalCenter
-            padding: 10
-
-        }
-
-        Text {
-
-            id:valorXY
-            font.pointSize:10
-            text: '<b>('+xAtual+', '+yAtual+')</b>'
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-
-        Label {
-
-            id: labelVel
-            font.pointSize:10
-            text: '<b>Velocidade:</b>'
-            anchors.horizontalCenter: parent.horizontalCenter
-            padding: 10
-        }
-
-        SpinBox {
-
-            value: vel
-            scale: 0.6
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            onValueChanged: {
-
-                if (objetoAssociado !== null)
-
-                    objetoAssociado.velocidade = value;
+                id:valorXY
+                font.pointSize:10
+                text: '<b>('+xAtual+', '+yAtual+')</b>'
+                anchors.horizontalCenter: parent.horizontalCenter
             }
-        }
 
-        Button {
+            Label {
 
-            text: qsTr("Excluir")
-            scale: 0.6
-            anchors.horizontalCenter: parent.horizontalCenter
+                id: labelVel
+                font.pointSize:10
+                text: '<b>Velocidade:</b>'
+                anchors.horizontalCenter: parent.horizontalCenter
+                padding: 10
+            }
 
-            onClicked: {
+            SpinBox {
 
-                pagina.parent.indice = indice;
+                value: vel
+                scale: 0.6
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                onValueChanged: {
+
+                    if (objetoAssociado !== null)
+
+                        objetoAssociado.velocidade = value;
+                }
+            }
+
+            Button {
+
+                text: qsTr("Excluir")
+                scale: 0.6
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                onClicked: {
+
+                    pagina.parent.indice = indice;
+                }
             }
         }
     }

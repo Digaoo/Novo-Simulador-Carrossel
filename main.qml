@@ -9,6 +9,8 @@ ApplicationWindow {
     visible: true
     visibility: ApplicationWindow.Maximized
     title: "Carrossel Caipira"
+    minimumWidth: 800
+    minimumHeight: 600
 
     // Layout de páginas controlado pelas abas.
     StackLayout {
@@ -39,7 +41,32 @@ ApplicationWindow {
             width: parent.width
             height: parent.height
 
-            TemplateSimulacao {}
+            ColumnLayout {
+
+                width: parent.width
+                height: parent.height
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                TemplateSimulacao {
+
+
+                    Layout.fillWidth: true
+                    Layout.topMargin: 5
+                    Layout.rightMargin: 10
+                    Layout.leftMargin: 10
+                }
+
+                TemplateControle {
+
+                    id: paramControle
+                    Layout.fillWidth: true
+                    Layout.topMargin: 5
+                    Layout.rightMargin: 10
+                    Layout.leftMargin: 10
+                    Layout.bottomMargin: 5
+                }
+            }
         }
 
         // Página da Estratégia.

@@ -7,11 +7,10 @@ import QtQml 2.0
 GridLayout {
 
     id: layoutCampos
-    width: parent.width - 10
-    height: parent.height - 10
+    width: parent.width
+    height: parent.height
     rows: 2
     columns: 5
-    anchors.centerIn: parent
 
     property var componentes: []
     property var logs: []
@@ -160,6 +159,11 @@ GridLayout {
                     if (logs[indice].tipo === "Bola") {
 
                         botaoNovaBola.enabled = true;
+                    }
+
+                    else if (logs[indice].tipo === "Robo") {
+
+                        botaoNovoRobo.enabled = true;
                     }
 
                     logs[indice].destroy();
@@ -392,6 +396,8 @@ GridLayout {
 
                     componentes[componentes.length-1].logAssociado = logs[logs.length -1];
                     logs[logs.length -1].objetoAssociado = componentes[componentes.length-1];
+
+                    botaoNovoRobo.enabled = false;
                 }
             }
 

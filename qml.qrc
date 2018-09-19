@@ -8,5 +8,6 @@
         <file>TemplateObjetos.qml</file>
         <file>TemplateItemLog.qml</file>
         <file>Obstaculo.qml</file>
+        <file>TemplateControle.qml</file>
     </qresource>
 </RCC>
